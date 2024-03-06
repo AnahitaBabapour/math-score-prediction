@@ -13,14 +13,9 @@ import warnings
 
 data = pd.read_excel('mathscore.xlsx')
 data
-
 data.describe()
-
 data.info()
-
 data.isna().sum()
-
-# Assuming 'EthnicGroup' is the column containing group labels
 ethnic_mapping = {
     'group A': 2,
     'group B': 3,
@@ -29,38 +24,29 @@ ethnic_mapping = {
     'group E': 6
 }
 
-# Replace the generic group labels with ethnic descriptions
 data['EthnicGroup'].replace(ethnic_mapping, inplace=True)
 data
 
-# fill the missing values for 'EthicGroup' column by the most frequent value
 mst_frq = data['EthnicGroup'].mode()[0]
 data['EthnicGroup'].fillna(mst_frq ,inplace= True)
 
-
-# fill the missing values for 'ParentEduc' column by the common degree they have
 mst_frq = data['ParentEduc'].mode()[0]
 data['ParentEduc'].fillna(mst_frq , inplace =True)
 
 
-# fill the missing values for 'ParentMaritalStatus' column by the single status
 data['ParentMaritalStatus'].fillna('single' , inplace = True)
 
 
-# fill the missing values for 'PracticeSport' column by the most common status
 mode = data['PracticeSport'].mode()[0]
 data['PracticeSport'].fillna(mode , inplace = True)
 
 
-# fill the missing calues for 'NrSiblings' column by average number of siblings the student have
 avg_siblings = data['NrSiblings'].mean()
 data['NrSiblings'].fillna(avg_siblings , inplace = True)
 
 
-# fill the missing calues for 'WklyStudyHours' column by average number of siblings the student have
 avg_hours = data['WklyStudyHours'].mode()[0]
 data['WklyStudyHours'].fillna(avg_hours , inplace = True)
-
 
 avg_IsFirstChild = data['IsFirstChild'].mode()[0]
 data['IsFirstChild'].fillna(avg_IsFirstChild , inplace = True)
@@ -69,7 +55,6 @@ data
 
 data["WklyStudyHours"] = data["WklyStudyHours"].str.replace("2024-05-10","5-10")
 data["WklyStudyHours"] = data["WklyStudyHours"].fillna("5-10")
-#data
 
 data = pd.DataFrame(data)
 data['MathScore'] = data['MathScore']/5
@@ -96,13 +81,10 @@ data['Gender']=data['Gender'].map({'female':2,'male':3})
 
 data['IsFirstChild']=data['IsFirstChild'].map({'no':2,'yes':3})
 
-#data
 
 data['ParentMaritalStatus']=data['ParentMaritalStatus'].map({'married':2, 'single':3, 'widowed':4, 'divorced':5})
 
 data['ParentEduc']=data['ParentEduc'].map({"bachelor's degree":2, "master's degree":3, "associate's degree":4, "some college":5, "high school":6, "some high school":7})
-
-#data
 
 data['PracticeSport']=data['PracticeSport'].map({'regularly':2,'sometimes':3,'never':4})
 data['WklyStudyHours']=data['WklyStudyHours'].map({'< 5':2,'5-10':3,'> 10':4})
@@ -111,7 +93,6 @@ data
 x = data[['Gender','ParentEduc','ParentMaritalStatus','PracticeSport','IsFirstChild',
           'NrSiblings','WklyStudyHours','EthnicGroup','ReadingScore','WritingScore']]
 y = data[['MathScore']].values.reshape(-1,1)
-#x.isna().sum()
 
 model = LinearRegression()
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
